@@ -1,7 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src"
+    "\\resources\\ios\\icon",
+    "\\src",
+    "\\src\\app",
+    "\\src\\pages",
+    "\\src\\pages\\overview",
+    "\\src\\pages\\settings",
+    "\\src\\pages\\transaction"
   ],
   "PreviewInSolutionExplorer": false
 }
