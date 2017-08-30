@@ -7,7 +7,11 @@
 
 <ion-header>
   <ion-navbar>
-    <ion-title>transaction</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
   <ion-toolbar>
     <ion-segment color="primary" [(ngModel)]="tabs">
@@ -26,8 +30,54 @@
 
 <ion-content padding>
 
-  <div>
-    <p *ngIf="tabs == 'cost'">+</p>
-  </div>
+  <ion-grid class="no-padding display">
+    <ion-row col-12 class="no-padding">
+      <div id="transaction-display">
+        <div>
+          <ion-icon id="transaction-icon" name="{{tabs | icon}}"></ion-icon>
+        </div>
+        <div>
+          t:{{transactionAmmount}}{{calculateAction}} | tm:{{tmpTransactionAmmount}}
+        </div>
+      </div>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="no-padding calculator">
+    <ion-row>
+      <ion-col col-10 class="no-padding keypad">
+          <ion-row class="btn-group">
+            <div><h1>1</h1></div>
+            <div><h1>2</h1></div>
+            <div><h1>3</h1></div>
+          </ion-row>
+          <ion-row class="btn-group">
+            <div><h1>4</h1></div>
+            <div><h1>5</h1></div>
+            <div><h1>6</h1></div>
+          </ion-row>
+          <ion-row class="btn-group">
+            <div><h1>7</h1></div>
+            <div><h1>8</h1></div>
+            <div><h1>9</h1></div>
+          </ion-row>
+          <ion-row class="btn-group">
+            <div><h1>.</h1></div>
+            <div><h1>0</h1></div>
+            <div><h1><ion-icon name="arrow-back"></ion-icon></h1></div>
+          </ion-row>
+      </ion-col>
+      <ion-col col-2 class="no-padding operations">
+        <ion-row class="side-btn-group">
+          <div><h1>+</h1></div>
+          <div><h1>-</h1></div>
+          <div><h1>*</h1></div>
+          <div><h1>/</h1></div>
+          <div><h1>=</h1></div>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
 
 </ion-content>

@@ -1,0 +1,76 @@
+.scroll-content {
+  padding: 0 !important;
+  overflow-y: hidden;
+}
+
+#transaction-display {
+  text-align: center;
+  background-color: transparent;
+  min-height: 50%;
+  box-shadow: 0px 5px 20px #656565;
+  z-index: 1;
+  width: 100%;
+}
+
+.display {
+  height: 40%;
+  background: #2948ff;
+}
+
+.calculator {
+  height: 60%;
+}
+
+.calculator > ion-row {
+  height: 100%;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.calculator {
+  text-align: center;
+}
+
+.keypad {
+  background: #F8F8F8; /* fallback for old browsers */
+}
+
+.operations {
+  background: #E8E8E8;
+}
+
+.keypad ion-row {
+  height: 25%;
+}
+
+.operations > ion-row {
+  height: 100%;
+}
+
+
+.btn-group h1, .side-btn-group h1 {
+  margin-top: 2rem !important;
+  height: 100%;
+}
+
+.btn-group div {
+  width: 33%;
+  min-height: 50px;
+  background-color: transparent;
+}
+
+.btn-group div{
+
+}
+
+.btn-group div:last-child {
+  width: 34%;
+}
+
+.side-btn-group div {
+  width: 100%;
+  min-height: 40px;
+  background-color: transparent;
+}

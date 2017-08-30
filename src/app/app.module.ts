@@ -5,25 +5,28 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { TransactionPage } from '../pages/transaction/transaction';
+import { PipesModule } from '../pipes/pipes.module'
 import { MyApp } from './app.component';
 
 @NgModule({
     declarations: [
         MyApp,
-        TransactionPage
+        TransactionPage,
     ],
     imports: [
         BrowserModule,
-        IonicModule.forRoot(MyApp)
+        IonicModule.forRoot(MyApp),
+        PipesModule,
     ],
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
-        TransactionPage
+        TransactionPage,
     ],
     providers: [
         StatusBar,
         SplashScreen,
+        
         { provide: ErrorHandler, useClass: IonicErrorHandler }
     ]
 })

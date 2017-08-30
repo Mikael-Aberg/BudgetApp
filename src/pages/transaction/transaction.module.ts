@@ -3,11 +3,14 @@ import { IonicPageModule } from 'ionic-angular';
 import { TransactionPage } from './transaction';
 
 @NgModule({
-  declarations: [
-    TransactionPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(TransactionPage),
-  ],
+    declarations: [
+        TransactionPage,
+    ],
+    imports: [
+        IonicPageModule.forChild(TransactionPage),
+    ],
+    exports: [
+        TransactionPage
+    ]
 })
-export class TransactionPageModule {}
+export class TransactionPageModule { }
