@@ -24,9 +24,7 @@ export class TransactionPage {
 
     }
 
-    calcAction(event) {
-        var target = event.target || event.srcElement || event.currentTarget;
-        var value = target.value;
+    calcAction(value) {
         if (this.calculateAction !== "" && this.tmpTransactionAmmount !== "") {
             this.transactionAmmount = Math.round((eval(this.transactionAmmount + this.calculateAction + this.tmpTransactionAmmount) * 100) / 100).toString();
             this.calculateAction = value;
@@ -37,10 +35,7 @@ export class TransactionPage {
         }
     }
 
-    append(event) {
-        var target = event.target || event.srcElement || event.currentTarget;
-        var value = target.value;
-
+    append(value) {
         if (this.calculateAction !== "") {
             this.tmpTransactionAmmount += value;
         }

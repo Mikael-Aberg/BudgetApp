@@ -7,6 +7,9 @@
 
 <ion-header>
   <ion-navbar>
+    <button ion-button icon-only>
+      <ion-icon name="close"></ion-icon>
+    </button>
     <ion-buttons end>
       <button ion-button icon-only>
         <ion-icon name="checkmark"></ion-icon>
@@ -45,34 +48,34 @@
   <ion-grid class="no-padding calculator">
     <ion-row>
       <ion-col col-10 class="no-padding keypad">
-          <ion-row class="btn-group">
-            <div><h1>1</h1></div>
-            <div><h1>2</h1></div>
-            <div><h1>3</h1></div>
-          </ion-row>
-          <ion-row class="btn-group">
-            <div><h1>4</h1></div>
-            <div><h1>5</h1></div>
-            <div><h1>6</h1></div>
-          </ion-row>
-          <ion-row class="btn-group">
-            <div><h1>7</h1></div>
-            <div><h1>8</h1></div>
-            <div><h1>9</h1></div>
-          </ion-row>
-          <ion-row class="btn-group">
-            <div><h1>.</h1></div>
-            <div><h1>0</h1></div>
-            <div><h1><ion-icon name="arrow-back"></ion-icon></h1></div>
-          </ion-row>
+        <ion-row class="btn-group">
+          <div (click)="append('1')"><h1>1</h1></div>
+          <div (click)="append('2')"><h1>2</h1></div>
+          <div (click)="append('3')"><h1>3</h1></div>
+        </ion-row>
+        <ion-row class="btn-group">
+          <div (click)="append('4')"><h1>4</h1></div>
+          <div (click)="append('5')"><h1>5</h1></div>
+          <div (click)="append('6')"><h1>6</h1></div>
+        </ion-row>
+        <ion-row class="btn-group">
+          <div (click)="append('7')"><h1>7</h1></div>
+          <div (click)="append('8')"><h1>8</h1></div>
+          <div (click)="append('9')"><h1>9</h1></div>
+        </ion-row>
+        <ion-row class="btn-group">
+          <div (click)="append('.')"><h1>.</h1></div>
+          <div (click)="append('0')"><h1>0</h1></div>
+          <div (click)="remove()"><h1><ion-icon name="arrow-back"></ion-icon></h1></div>
+        </ion-row>
       </ion-col>
       <ion-col col-2 class="no-padding operations">
         <ion-row class="side-btn-group">
-          <div><h1>+</h1></div>
-          <div><h1>-</h1></div>
-          <div><h1>*</h1></div>
-          <div><h1>/</h1></div>
-          <div><h1>=</h1></div>
+          <div (click)="calcAction('+')"><h1>+</h1></div>
+          <div (click)="calcAction('-')"><h1>-</h1></div>
+          <div (click)="calcAction('*')"><h1>*</h1></div>
+          <div (click)="calcAction('/')"><h1>/</h1></div>
+          <div (click)="calculate()"><h1>=</h1></div>
         </ion-row>
       </ion-col>
     </ion-row>
