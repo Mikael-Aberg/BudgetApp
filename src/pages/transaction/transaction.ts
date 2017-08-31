@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the TransactionPage page.
@@ -19,14 +20,16 @@ export class TransactionPage {
     transactionAmmount = "";
     tmpTransactionAmmount = "";
     calculateAction = "";
+    displayValue = "0";
+    wrapperHeight: number;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
-
+    constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService) {
+        translate.setDefaultLang('en');
     }
 
     calcAction(value) {
         if (this.calculateAction !== "" && this.tmpTransactionAmmount !== "") {
-            this.transactionAmmount = Math.round((eval(this.transactionAmmount + this.calculateAction + this.tmpTransactionAmmount) * 100) / 100).toString();
+            this.calculate();
             this.calculateAction = value;
             this.tmpTransactionAmmount = "";
         }
@@ -46,6 +49,7 @@ export class TransactionPage {
                 this.transactionAmmount += value;
             }
         }
+        this.resizeText();
     }
 
     remove() {
@@ -64,6 +68,7 @@ export class TransactionPage {
         else {
             this.transactionAmmount = "0";
         }
+        this.resizeText();
     }
 
     calculate() {
@@ -71,13 +76,29 @@ export class TransactionPage {
             this.transactionAmmount = Math.round((eval(this.transactionAmmount + this.calculateAction + this.tmpTransactionAmmount) * 100) / 100).toString();
             this.calculateAction = "";
             this.tmpTransactionAmmount = "";
+            this.displayValue = this.transactionAmmount + this.calculateAction + this.tmpTransactionAmmount;
         }
         else {
             this.calculateAction = "";
+        }
+        this.resizeText();
+    }
+
+    resizeText() {
+        if ((this.transactionAmmount.length + this.tmpTransactionAmmount.length + this.calculateAction.length) > 1) {
+            document.getElementById("transaction-numbers").style.fontSize = (this.wrapperHeight / (this.transactionAmmount.length + this.tmpTransactionAmmount.length + this.calculateAction.length) * 1.5) + "px";
+        }
+        else {
+            document.getElementById("transaction-numbers").style.fontSize = (this.wrapperHeight / (this.transactionAmmount.length + this.tmpTransactionAmmount.length + this.calculateAction.length)) + "px";
         }
     }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad TransactionPage');
+        this.wrapperHeight = +document.getElementById("transaction-number-wrappers").scrollWidth;
+        document.getElementById("transaction-icon").style.lineHeight = this.wrapperHeight + "px";
+        document.getElementById("transaction-currency").style.lineHeight = this.wrapperHeight + "px";
+        document.getElementById("transaction-numbers").style.lineHeight = this.wrapperHeight + "px";
+        this.resizeText();
     }
 }

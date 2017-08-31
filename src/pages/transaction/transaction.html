@@ -7,9 +7,11 @@
 
 <ion-header>
   <ion-navbar>
-    <button ion-button icon-only>
-      <ion-icon name="close"></ion-icon>
-    </button>
+    <ion-buttons>
+      <button ion-button icon-only>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-buttons end>
       <button ion-button icon-only>
         <ion-icon name="checkmark"></ion-icon>
@@ -19,13 +21,13 @@
   <ion-toolbar>
     <ion-segment color="primary" [(ngModel)]="tabs">
       <ion-segment-button value="transfer">
-        TRANSFER
+        {{ 'TRANSACTION.TRANSFER' | translate }}
       </ion-segment-button>
       <ion-segment-button value="cost">
-        COST
+        {{ 'TRANSACTION.COST' | translate }}
       </ion-segment-button>
       <ion-segment-button value="expense">
-        EXPENSE
+        {{ 'TRANSACTION.EXPENSE' | translate }}
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -35,14 +37,11 @@
 
   <ion-grid class="no-padding display">
     <ion-row col-12 class="no-padding">
-      <div id="transaction-display">
-        <div>
-          <ion-icon id="transaction-icon" name="{{tabs | icon}}"></ion-icon>
-        </div>
-        <div>
-          t:{{transactionAmmount}}{{calculateAction}} | tm:{{tmpTransactionAmmount}}
-        </div>
-      </div>
+      <ion-col col-2 class="no-padding"><ion-icon id="transaction-icon" name="{{tabs | icon}}"></ion-icon></ion-col>
+      <ion-col col-7 id="transaction-number-wrappers" class="no-padding">
+        <h1 id="transaction-numbers">{{transactionAmmount}}{{calculateAction}}{{tmpTransactionAmmount}}</h1>
+      </ion-col>
+      <ion-col col-3 class="no-padding"><h1 id="transaction-currency">SEK</h1></ion-col>
     </ion-row>
   </ion-grid>
   <ion-grid class="no-padding calculator">
