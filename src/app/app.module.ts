@@ -8,8 +8,6 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import {Ng2FittextModule} from "ng2-fittext/ng2fittext";
-
 import { TransactionPage } from '../pages/transaction/transaction';
 import { PipesModule } from '../pipes/pipes.module'
 import { MyApp } from './app.component';
@@ -26,7 +24,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     imports: [
         BrowserModule,
         HttpClientModule,
-        Ng2FittextModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
