@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { TransactionPage } from '../transaction/transaction';
 
 /**
  * Generated class for the OverviewPage page.
@@ -10,16 +11,20 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-overview',
-  templateUrl: 'overview.html',
+    selector: 'page-overview',
+    templateUrl: 'overview.html',
 })
 export class OverviewPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+    constructor(public navCtrl: NavController, public navParams: NavParams) {
+    }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad OverviewPage');
-  }
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad OverviewPage');
+    }
+
+    openTransaction() {
+        this.navCtrl.push(TransactionPage);
+    }
 
 }

@@ -9,6 +9,8 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { TransactionPage } from '../pages/transaction/transaction';
+import { OverviewPage } from '../pages/overview/overview';
+
 import { PipesModule } from '../pipes/pipes.module'
 import { MyApp } from './app.component';
 
@@ -20,6 +22,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     declarations: [
         MyApp,
         TransactionPage,
+        OverviewPage,
     ],
     imports: [
         BrowserModule,
@@ -38,6 +41,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     entryComponents: [
         MyApp,
         TransactionPage,
+        OverviewPage,
     ],
     providers: [
         StatusBar,
