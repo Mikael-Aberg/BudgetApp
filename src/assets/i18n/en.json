@@ -1,7 +1,7 @@
 {
   "TRANSACTION": {
-    "COST": "COST",
+    "INCOME": "INCOME",
     "TRANSFER": "TRANSFER",
-    "EXPENSE": "EXPENSE"
+    "EXPENSE": "COST"
   }
 }

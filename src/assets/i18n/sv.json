@@ -1,0 +1,7 @@
+{
+  "TRANSACTION": {
+    "INCOME": "INKOMST",
+    "TRANSFER": "ÖVERFÖRING",
+    "EXPENSE": "KOSTNAD"
+  }
+}

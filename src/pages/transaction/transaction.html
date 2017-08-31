@@ -24,7 +24,7 @@
         {{ 'TRANSACTION.TRANSFER' | translate }}
       </ion-segment-button>
       <ion-segment-button value="cost">
-        {{ 'TRANSACTION.COST' | translate }}
+        {{ 'TRANSACTION.INCOME' | translate }}
       </ion-segment-button>
       <ion-segment-button value="expense">
         {{ 'TRANSACTION.EXPENSE' | translate }}
@@ -36,7 +36,7 @@
 <ion-content padding>
 
   <ion-grid class="no-padding display">
-    <ion-row col-12 class="no-padding">
+    <ion-row col-12 class="no-padding shadow">
       <ion-col col-2 class="no-padding"><ion-icon id="transaction-icon" name="{{tabs | icon}}"></ion-icon></ion-col>
       <ion-col col-7 id="transaction-number-wrappers" class="no-padding">
         <h1 id="transaction-numbers">{{transactionAmmount}}{{calculateAction}}{{tmpTransactionAmmount}}</h1>

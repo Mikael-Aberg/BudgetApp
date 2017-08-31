@@ -20,7 +20,6 @@ export class TransactionPage {
     transactionAmmount = "";
     tmpTransactionAmmount = "";
     calculateAction = "";
-    displayValue = "0";
     wrapperHeight: number;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService) {
@@ -76,7 +75,6 @@ export class TransactionPage {
             this.transactionAmmount = Math.round((eval(this.transactionAmmount + this.calculateAction + this.tmpTransactionAmmount) * 100) / 100).toString();
             this.calculateAction = "";
             this.tmpTransactionAmmount = "";
-            this.displayValue = this.transactionAmmount + this.calculateAction + this.tmpTransactionAmmount;
         }
         else {
             this.calculateAction = "";
