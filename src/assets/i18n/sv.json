@@ -2,6 +2,7 @@
   "TRANSACTION": {
     "INCOME": "INKOMST",
     "TRANSFER": "ÖVERFÖRING",
-    "EXPENSE": "KOSTNAD"
+    "EXPENSE": "KOSTNAD",
+    "DETAILS": "Detaljer"
   }
 }

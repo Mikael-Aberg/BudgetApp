@@ -18,13 +18,13 @@ export class IconPipe implements PipeTransform {
   transform(value: string, ...args) {
       switch (value) {
           case "transfer":
-              return "swap";
+              return "swap"; // icon name
+          case "income":
+              return "add"; // icon name
           case "cost":
-              return "add";
-          case "expense":
-              return "remove";
+              return "remove"; // icon name
           default:
-              return "";
+              return "remove";
       }
   }
 }

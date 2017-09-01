@@ -17,13 +17,23 @@
   text-align: center;
 }
 
+#details-button-row {
+  height: 5%;
+  background: #cbccce;
+  text-align: center;
+  cursor: pointer;
+}
+
 .shadow {
-  box-shadow: 0px -12px 16px 15px #242427, inset -1px -2px 20px 6px #223dd8;
+  box-shadow: 0px -12px 16px 15px #7d7d88, inset -1px -2px 20px 6px #bfc4de;
   z-index: 1;
 }
 
 #transaction-icon {
-  font-size: 70px;
+  font-size: 3em;
+  text-align: center;
+  width: 100%;
+  margin-left: 20%;
 }
 
 #transaction-currency, #transaction-icon {
@@ -33,11 +43,14 @@
 
 .display {
   height: 40%;
-  background: #2948ff;
+  background: #E0EAFC; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  overflow: hidden;
 }
 
 .calculator {
-  height: 60%;
+  height: 55%;
 }
 
 .calculator > ion-row {

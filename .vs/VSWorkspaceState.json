@@ -3,10 +3,14 @@
     "",
     "\\src",
     "\\src\\app",
+    "\\src\\assets",
+    "\\src\\assets\\i18n",
     "\\src\\pages",
     "\\src\\pages\\overview",
-    "\\src\\pages\\settings",
-    "\\src\\pages\\transaction"
+    "\\src\\pages\\transaction",
+    "\\src\\pipes",
+    "\\src\\pipes\\transaction"
   ],
+  "SelectedNode": "\\src\\pages\\transaction\\transaction.scss",
   "PreviewInSolutionExplorer": false
 }

@@ -16,7 +16,7 @@
       <ion-segment-button value="transfer">
         {{ 'TRANSACTION.TRANSFER' | translate }}
       </ion-segment-button>
-      <ion-segment-button value="cost">
+      <ion-segment-button value="income">
         {{ 'TRANSACTION.INCOME' | translate }}
       </ion-segment-button>
       <ion-segment-button value="expense">
@@ -29,11 +29,18 @@
 <ion-content padding>
   <ion-grid class="no-padding display">
     <ion-row col-12 class="no-padding shadow">
-      <ion-col col-2 class="no-padding"><ion-icon id="transaction-icon" name="{{tabs | icon}}"></ion-icon></ion-col>
-      <ion-col col-7 id="transaction-number-wrappers" class="no-padding">
+      <ion-col col-2 class="no-padding"><h1><ion-icon id="transaction-icon" name="{{tabs | icon}}"></ion-icon></h1></ion-col>
+      <ion-col col-8 id="transaction-number-wrappers" class="no-padding">
         <h1 id="transaction-numbers">{{transactionAmmount}}{{calculateAction}}{{tmpTransactionAmmount}}</h1>
       </ion-col>
-      <ion-col col-3 class="no-padding"><h1 id="transaction-currency">SEK</h1></ion-col>
+      <ion-col col-2 class="no-padding"><h1 id="transaction-currency">SEK</h1></ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid (click)="openDetails()" id="details-button-row" class="no-padding">
+    <ion-row class="no-padding">
+      <ion-col>
+        {{ 'TRANSACTION.DETAILS' | translate }}
+      </ion-col>
     </ion-row>
   </ion-grid>
   <ion-grid class="no-padding calculator">
