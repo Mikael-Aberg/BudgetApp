@@ -17,13 +17,14 @@ import { TranslateService } from '@ngx-translate/core';
 export class TransactionPage {
 
     tabs = "";
-    transactionAmmount = "";
+    transactionAmmount = "0";
     tmpTransactionAmmount = "";
     calculateAction = "";
     wrapperHeight: number;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService) {
         translate.setDefaultLang('en');
+        this.tabs = navParams.get("tabs") ? navParams.get("tabs") : "income";
     }
 
     calcAction(value) {
@@ -35,6 +36,7 @@ export class TransactionPage {
         else {
             this.calculateAction = value;
         }
+        this.resizeText();
     }
 
     append(value) {
@@ -72,7 +74,25 @@ export class TransactionPage {
 
     calculate() {
         if (this.calculateAction !== "" && this.tmpTransactionAmmount !== "") {
-            this.transactionAmmount = Math.round((eval(this.transactionAmmount + this.calculateAction + this.tmpTransactionAmmount) * 100) / 100).toString();
+
+            switch (this.calculateAction) {
+                case "+":
+                    this.transactionAmmount = (Number(this.transactionAmmount) + Number(this.tmpTransactionAmmount)).toFixed(2).toString();
+                    break;
+                case "-":
+                    this.transactionAmmount = (Number(this.transactionAmmount) - Number(this.tmpTransactionAmmount)).toFixed(2).toString();
+                    break;
+                case "*":
+                    this.transactionAmmount = (Number(this.transactionAmmount) * Number(this.tmpTransactionAmmount)).toFixed(2).toString();
+                    break;
+                case "/":
+                    this.transactionAmmount = (Number(this.transactionAmmount) / Number(this.tmpTransactionAmmount)).toFixed(2).toString();
+                    break;
+            }
+
+            if (this.transactionAmmount.charAt(0) == "-") {
+                this.transactionAmmount = "0";
+            }
             this.calculateAction = "";
             this.tmpTransactionAmmount = "";
         }
@@ -83,16 +103,19 @@ export class TransactionPage {
     }
 
     resizeText() {
-        if ((this.transactionAmmount.length + this.tmpTransactionAmmount.length + this.calculateAction.length) > 1) {
+        if ((this.transactionAmmount.length + this.tmpTransactionAmmount.length + this.calculateAction.length) > 2) {
             document.getElementById("transaction-numbers").style.fontSize = (this.wrapperHeight / (this.transactionAmmount.length + this.tmpTransactionAmmount.length + this.calculateAction.length) * 1.5) + "px";
         }
         else {
-            document.getElementById("transaction-numbers").style.fontSize = (this.wrapperHeight / (this.transactionAmmount.length + this.tmpTransactionAmmount.length + this.calculateAction.length)) + "px";
+            document.getElementById("transaction-numbers").style.fontSize = (this.wrapperHeight / (1.5)) + "px";
         }
     }
 
+    openDetails() {
+        console.log("Click");
+    }
+
     ionViewDidLoad() {
-        console.log('ionViewDidLoad TransactionPage');
         this.wrapperHeight = +document.getElementById("transaction-number-wrappers").scrollWidth;
         document.getElementById("transaction-icon").style.lineHeight = this.wrapperHeight + "px";
         document.getElementById("transaction-currency").style.lineHeight = this.wrapperHeight + "px";
