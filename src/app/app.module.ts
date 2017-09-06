@@ -13,7 +13,6 @@ import { OverviewPage } from '../pages/overview/overview';
 
 import { PipesModule } from '../pipes/pipes.module'
 import { MyApp } from './app.component';
-import { DatabaseProvider } from '../providers/database/database';
 
 import { Sql } from '../providers/database/Sql';
 
@@ -50,8 +49,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         StatusBar,
         Sql,
         SplashScreen,
-        { provide: ErrorHandler, useClass: IonicErrorHandler },
-    DatabaseProvider
+        { provide: ErrorHandler, useClass: IonicErrorHandler }
     ]
 })
 export class AppModule { }

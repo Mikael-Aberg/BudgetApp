@@ -45,6 +45,7 @@ export class Sql {
             + 'Title text NOT NULL,'
             + 'Ammount real NOT NULL,'
             + 'Account_ID integer NOT NULL,'
+            + 'Timestamp real NOT NULL,'
             + 'FOREIGN KEY (Account_ID) REFERENCES Account (ID))').catch(err => {
                 console.error('Storage: Unable to create initial storage tables', err.tx, err.err);
             });
@@ -60,19 +61,20 @@ export class Sql {
             + 'Category_ID,'
             + 'FOREIGN KEY (Transaction_post_ID) REFERENCES Transaction_post (ID),'
             + 'FOREIGN KEY (Category_ID) REFERENCES Category (ID),'
-			+ 'UNIQUE(Transaction_post_ID, Category_ID))').catch(err => {
+            + 'UNIQUE(Transaction_post_ID, Category_ID))').catch(err => {
                 console.error('Storage: Unable to create initial storage tables', err.tx, err.err);
             });
 
-		// INSERT & SELECT examples
+        // INSERT & SELECT examples
         //this.query('INSERT INTO Account (Title, Ammount) VALUES ("Account 1", 200)');
-        //this.query('INSERT INTO Category (Title) VALUES ("Food")');
-        //this.query('INSERT INTO Category (Title) VALUES ("Housing")');
+        this.query('INSERT INTO Category (Title) VALUES ("Food")');
+        this.query('INSERT INTO Category (Title) VALUES ("Housing")');
 
         //this.query('INSERT OR IGNORE INTO TransactionCategory (Transaction_post_ID, Category_ID) VALUES (1, 2)');
         //this.query('INSERT OR IGNORE INTO TransactionCategory (Transaction_post_ID, Category_ID) VALUES (2, 1)');
 
-        //this.query('INSERT INTO Transaction_post (Title, Ammount, Account_ID) VALUES ("Post 1", 123, 1)');
+        //this.query('INSERT INTO Transaction_post (Title, Ammount, Account_ID, Timestamp) VALUES ("Post 1", 123, 1, julianday("2017-01-01 10:00:00"))');
+        //this.query('SELECT Title, Ammount, date(Timestamp) as Date, time(Timestamp) as Time FROM Transaction_post').then((val) => { console.log(val.res.rows); }).catch((err) => { console.log(err); });
 
         //this.query('SELECT Transaction_post.*, Category.Title as Category FROM Transaction_post JOIN TransactionCategory ON (Transaction_post.ID = Transaction_post_ID AND TransactionCategory.Category_ID = 1)'
         //    + 'JOIN Category ON (TransactionCategory.Category_ID = Category.ID)').then((val) => { console.log(val.res.rows); }).catch((err) => { console.log(err); });
@@ -115,6 +117,18 @@ export class Sql {
         return this.query('select key, value from kv where key = ? limit 1', [key]).then(data => {
             if (data.res.rows.length > 0) {
                 return data.res.rows.item(0).value;
+            }
+        });
+    }
+
+    /**
+     * Get all the categoreis 
+     * @return {Promise} with the rows of the categories 
+     */
+    getCategories() {
+        return this.query('Select * from Category').then(data => {
+            if (data.res.rows.length > 0) {
+                return data.res.rows;
             }
         });
     }

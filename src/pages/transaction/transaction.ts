@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { Sql } from '../../providers/database/Sql';
 
 /**
  * Generated class for the TransactionPage page.
@@ -21,10 +22,15 @@ export class TransactionPage {
     tmpTransactionAmmount = "";
     calculateAction = "";
     wrapperHeight: number;
+    categories: any;
+    transaction = {
+        category: "",
+    }
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService, sql: Sql) {
         translate.setDefaultLang('en');
         this.tabs = navParams.get("tabs") ? navParams.get("tabs") : "income";
+        sql.getCategories().then((val) => this.categories = val);
     }
 
     calcAction(value) {

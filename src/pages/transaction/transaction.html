@@ -39,7 +39,13 @@
   <ion-grid (click)="openDetails()" id="details-button-row" class="no-padding">
     <ion-row class="no-padding">
       <ion-col>
-        {{ 'TRANSACTION.DETAILS' | translate }}
+        <!--{{ 'TRANSACTION.DETAILS' | translate }}-->
+        <select [(ngModel)]="transaction.category">
+          <option *ngFor="let category of categories"
+                  [value]="category.ID">
+            {{category.Title}}
+          </option>
+        </select>
       </ion-col>
     </ion-row>
   </ion-grid>

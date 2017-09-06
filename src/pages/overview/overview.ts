@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TransactionPage } from '../transaction/transaction';
-import { DatabaseProvider } from '../../providers/database/database';
 
 /**
  * Generated class for the OverviewPage page.
@@ -13,15 +12,11 @@ import { DatabaseProvider } from '../../providers/database/database';
 @IonicPage()
 @Component({
     selector: 'page-overview',
-    templateUrl: 'overview.html',
-    providers: [DatabaseProvider],
+    templateUrl: 'overview.html'
 })
 export class OverviewPage {
 
-    _db: any;
-
-    constructor(public navCtrl: NavController, public navParams: NavParams, private db: DatabaseProvider) {
-        this._db = db;
+    constructor(public navCtrl: NavController, public navParams: NavParams) {
     }
 
     ionViewDidLoad() {
@@ -32,5 +27,4 @@ export class OverviewPage {
             tabs: "expense"
         });
     }
-
 }
