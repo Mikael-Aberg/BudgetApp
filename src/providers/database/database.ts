@@ -1,21 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { Sql } from './Sql'
 import 'rxjs/add/operator/map';
 
-/*
-  Generated class for the DatabaseProvider provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
 @Injectable()
 export class DatabaseProvider {
 
-    constructor(public http: HttpClientModule) {
+    constructor(public http: HttpClientModule, private sql: Sql) {
         this.initialiseDB();
     }
 
     initialiseDB() {
-        console.log("Creating DB");
+        this.sql.query('create table if not exists danceMoves(name VARCHAR(32))').then(() => { console.log("Table created"); }).catch((e) => { console.log(e); });
     }
 }
