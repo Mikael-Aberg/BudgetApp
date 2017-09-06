@@ -11,6 +11,6 @@ export class DatabaseProvider {
     }
 
     initialiseDB() {
-        this.sql.query('create table if not exists danceMoves(name VARCHAR(32))').then(() => { console.log("Table created"); }).catch((e) => { console.log(e); });
+
     }
 }
