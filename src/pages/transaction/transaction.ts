@@ -25,7 +25,11 @@ export class TransactionPage {
     categories: any;
     transaction = {
         category: "",
-    }
+    };
+    slideoptions: {
+        pager: true,
+        autoHeight: true
+    };
 
     constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService, sql: Sql) {
         translate.setDefaultLang('en');

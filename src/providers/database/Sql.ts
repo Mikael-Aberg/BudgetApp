@@ -33,51 +33,53 @@ export class Sql {
 
     // Initialize the DB with our required tables
     _tryInit() {
-        this.query('CREATE TABLE IF NOT EXISTS Account ('
-            + 'ID integer PRIMARY KEY,'
-            + 'Title text NOT NULL,'
-            + 'Ammount real NOT NULL)').catch(err => {
+        this.query('CREATE TABLE IF NOT EXISTS "Category"('
+            + '"ID" INTEGER PRIMARY KEY NOT NULL,'
+            + '"Title" VARCHAR(45) NOT NULL,'
+            + 'CONSTRAINT "ID_UNIQUE"'
+            + 'UNIQUE("ID"))').catch(err => {
                 console.error('Storage: Unable to create initial storage tables', err.tx, err.err);
             });
 
-        this.query('CREATE TABLE IF NOT EXISTS Transaction_post ('
-            + 'ID integer PRIMARY KEY,'
-            + 'Title text NOT NULL,'
-            + 'Ammount real NOT NULL,'
-            + 'Account_ID integer NOT NULL,'
-            + 'Timestamp real NOT NULL,'
-            + 'FOREIGN KEY (Account_ID) REFERENCES Account (ID))').catch(err => {
+        this.query('CREATE TABLE IF NOT EXISTS "Account"('
+            + '"ID" INTEGER PRIMARY KEY NOT NULL,'
+            + '"Title" VARCHAR(45) NOT NULL,'
+            + '"Ammount" INTEGER NOT NULL,'
+            + 'CONSTRAINT "ID_UNIQUE"'
+            + 'UNIQUE("ID"))').catch(err => {
                 console.error('Storage: Unable to create initial storage tables', err.tx, err.err);
             });
 
-        this.query('CREATE TABLE IF NOT EXISTS Category ('
-            + 'ID integer PRIMARY KEY,'
-            + 'Title text NOT NULL)').catch(err => {
+        this.query('CREATE TABLE IF NOT EXISTS "Transaction_post"('
+            + '"ID" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
+            + '"Timestamp" REAL NOT NULL,'
+            + '"Ammount" REAL NOT NULL,'
+            + '"Description" TEXT,'
+            + '"Account_ID" INTEGER NOT NULL,'
+            + '"Category_ID" INTEGER NOT NULL,'
+            + 'CONSTRAINT "fk_Transaction_post_Account"'
+            + 'FOREIGN KEY("Account_ID")'
+            + 'REFERENCES "Account"("ID"),'
+            + 'CONSTRAINT "fk_Transaction_post_Category1"'
+            + 'FOREIGN KEY("Category_ID")'
+            + 'REFERENCES "Category"("ID"));').catch(err => {
                 console.error('Storage: Unable to create initial storage tables', err.tx, err.err);
             });
 
-        this.query('CREATE TABLE IF NOT EXISTS TransactionCategory ('
-            + 'Transaction_post_ID,'
-            + 'Category_ID,'
-            + 'FOREIGN KEY (Transaction_post_ID) REFERENCES Transaction_post (ID),'
-            + 'FOREIGN KEY (Category_ID) REFERENCES Category (ID),'
-            + 'UNIQUE(Transaction_post_ID, Category_ID))').catch(err => {
-                console.error('Storage: Unable to create initial storage tables', err.tx, err.err);
-            });
+        this.query('CREATE INDEX IF NOT EXISTS "Transaction_post.fk_Transaction_post_Account_idx" ON "Transaction_post" ("Account_ID");').catch(err => {
+            console.error('Storage: Unable to create initial storage tables', err.tx, err.err);
+        });
 
-        // INSERT & SELECT examples
+        this.query('CREATE INDEX IF NOT EXISTS "Transaction_post.fk_Transaction_post_Category1_idx" ON "Transaction_post" ("Category_ID");').catch(err => {
+            console.error('Storage: Unable to create initial storage tables', err.tx, err.err);
+        });
+
         //this.query('INSERT INTO Account (Title, Ammount) VALUES ("Account 1", 200)');
-        this.query('INSERT INTO Category (Title) VALUES ("Food")');
-        this.query('INSERT INTO Category (Title) VALUES ("Housing")');
-
-        //this.query('INSERT OR IGNORE INTO TransactionCategory (Transaction_post_ID, Category_ID) VALUES (1, 2)');
-        //this.query('INSERT OR IGNORE INTO TransactionCategory (Transaction_post_ID, Category_ID) VALUES (2, 1)');
+        //this.query('INSERT INTO Category (Title) VALUES ("Food")');
+        //this.query('INSERT INTO Category (Title) VALUES ("Housing")');
 
         //this.query('INSERT INTO Transaction_post (Title, Ammount, Account_ID, Timestamp) VALUES ("Post 1", 123, 1, julianday("2017-01-01 10:00:00"))');
         //this.query('SELECT Title, Ammount, date(Timestamp) as Date, time(Timestamp) as Time FROM Transaction_post').then((val) => { console.log(val.res.rows); }).catch((err) => { console.log(err); });
-
-        //this.query('SELECT Transaction_post.*, Category.Title as Category FROM Transaction_post JOIN TransactionCategory ON (Transaction_post.ID = Transaction_post_ID AND TransactionCategory.Category_ID = 1)'
-        //    + 'JOIN Category ON (TransactionCategory.Category_ID = Category.ID)').then((val) => { console.log(val.res.rows); }).catch((err) => { console.log(err); });
 
         //this.query('SELECT * FROM Transaction_post WHERE Account_ID = 2').then((val) => { console.log(val.res.rows); }).catch((err) => { console.log(err); });
     }
@@ -91,7 +93,7 @@ export class Sql {
      * @param {array} params the additional params to use for query placeholders
      * @return {Promise} that resolves or rejects with an object of the form { tx: Transaction, res: Result (or err)}
      */
-    query(query: string, params: any[] = []): Promise<any> {
+    private query(query: string, params: any[] = []): Promise<any> {
         return new Promise((resolve, reject) => {
             try {
                 this._dbPromise.then(db => {
@@ -104,6 +106,21 @@ export class Sql {
                 });
             } catch (err) {
                 reject({ err: err });
+            }
+        });
+    }
+
+    addTransaction(title: string, timestamp: string, ammount: number, account_id: number, category_id: number) {
+        return this.query('INSERT INTO Transaction_post (Title, Ammount, Account_ID, Timestamp, Category_ID) VALUES ("' + title + '",' + ammount + ',' + account_id + ',julianday("' + timestamp + '"), ' + category_id + ')');
+    }
+
+    getTransactions() {
+        return this.query('Select *, Date(Timestamp) as Date, Time(Timestamp) as Time from Transaction_post').then(data => {
+            if (data.res.rows.length > 0) {
+                return data.res.rows;
+            }
+            else {
+                return null;
             }
         });
     }

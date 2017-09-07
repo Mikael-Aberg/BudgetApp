@@ -22,6 +22,7 @@
   background: #cbccce;
   text-align: center;
   cursor: pointer;
+  top: 40%;
 }
 
 .shadow {
@@ -51,6 +52,7 @@
 
 .calculator {
   height: 55%;
+  top: 45%;
 }
 
 .calculator > ion-row {
@@ -92,9 +94,6 @@
   background-color: transparent;
 }
 
-.btn-group div {
-}
-
 .btn-group div:last-child {
   width: 34%;
 }
@@ -103,4 +102,9 @@
   width: 100%;
   height: 20%;
   background-color: transparent;
+}
+
+ion-grid {
+  position: absolute;
+  top: 0;
 }
