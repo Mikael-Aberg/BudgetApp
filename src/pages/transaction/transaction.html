@@ -6,13 +6,13 @@
       </button>
     </ion-buttons>
     <ion-buttons end>
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="validate()">
         <ion-icon name="checkmark"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
   <ion-toolbar>
-    <ion-segment color="primary" [(ngModel)]="tabs">
+    <ion-segment color="primary" [(ngModel)]="transaction.transactionType">
       <ion-segment-button value="transfer">
         {{ 'TRANSACTION.TRANSFER' | translate }}
       </ion-segment-button>
@@ -27,55 +27,85 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-grid class="no-padding display">
-    <ion-row col-12 class="no-padding shadow">
-      <ion-col col-2 class="no-padding"><h1><ion-icon id="transaction-icon" name="{{tabs | icon}}"></ion-icon></h1></ion-col>
-      <ion-col col-8 id="transaction-number-wrappers" class="no-padding">
-        <h1 id="transaction-numbers">{{transactionAmmount}}{{calculateAction}}{{tmpTransactionAmmount}}</h1>
-      </ion-col>
-      <ion-col col-2 class="no-padding"><h1 id="transaction-currency">SEK</h1></ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-grid (click)="openDetails()" id="details-button-row" class="no-padding">
-    <ion-row class="no-padding">
-      <ion-col>
-        {{ 'TRANSACTION.DETAILS' | translate }}
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-grid class="no-padding calculator">
-    <ion-row>
-      <ion-col col-10 class="no-padding keypad">
-        <ion-row class="btn-group">
-          <div (click)="append('1')"><h1>1</h1></div>
-          <div (click)="append('2')"><h1>2</h1></div>
-          <div (click)="append('3')"><h1>3</h1></div>
+  <ion-slides>
+    <ion-slide>
+      <ion-grid class="no-padding display">
+        <ion-row col-12 class="no-padding shadow">
+          <ion-col col-2 class="no-padding"><h1><ion-icon id="transaction-icon" name="{{transaction.transactionType | icon}}"></ion-icon></h1></ion-col>
+          <ion-col col-8 id="transaction-number-wrappers" class="no-padding">
+            <h1 id="transaction-numbers">{{transactionAmmount}}{{calculateAction}}{{tmpTransactionAmmount}}</h1>
+          </ion-col>
+          <ion-col col-2 class="no-padding"><h1 id="transaction-currency">SEK</h1></ion-col>
+          <ion-row col-12>
+            <ion-col col-6>
+              <ion-label class="small-font">{{ 'TRANSACTION.ACCOUNT' | translate }}</ion-label>
+              <ion-select [(ngModel)]="transaction.account">
+                <ion-option *ngFor="let account of accounts" [value]="account.ID" [attr.selected]="account.selected">{{account.Title}}</ion-option>
+              </ion-select>
+            </ion-col>
+            <ion-col col-6>
+              <ion-label class="small-font">{{ 'TRANSACTION.CATEGORY' | translate }}</ion-label>
+              <ion-select [(ngModel)]="transaction.category">
+                <ion-option *ngFor="let category of categories" [value]="category.ID" [attr.selected]="category.selected">{{category.Title}}</ion-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
         </ion-row>
-        <ion-row class="btn-group">
-          <div (click)="append('4')"><h1>4</h1></div>
-          <div (click)="append('5')"><h1>5</h1></div>
-          <div (click)="append('6')"><h1>6</h1></div>
+      </ion-grid>
+      <ion-grid id="details-button-row" class="no-padding">
+        <ion-row class="no-padding">
+          <ion-col>
+            {{ 'TRANSACTION.DETAILS' | translate }}
+          </ion-col>
         </ion-row>
-        <ion-row class="btn-group">
-          <div (click)="append('7')"><h1>7</h1></div>
-          <div (click)="append('8')"><h1>8</h1></div>
-          <div (click)="append('9')"><h1>9</h1></div>
+      </ion-grid>
+      <ion-grid class="no-padding calculator">
+        <ion-row>
+          <ion-col col-10 class="no-padding keypad">
+            <ion-row class="btn-group">
+              <div (click)="append('1')"><h1>1</h1></div>
+              <div (click)="append('2')"><h1>2</h1></div>
+              <div (click)="append('3')"><h1>3</h1></div>
+            </ion-row>
+            <ion-row class="btn-group">
+              <div (click)="append('4')"><h1>4</h1></div>
+              <div (click)="append('5')"><h1>5</h1></div>
+              <div (click)="append('6')"><h1>6</h1></div>
+            </ion-row>
+            <ion-row class="btn-group">
+              <div (click)="append('7')"><h1>7</h1></div>
+              <div (click)="append('8')"><h1>8</h1></div>
+              <div (click)="append('9')"><h1>9</h1></div>
+            </ion-row>
+            <ion-row class="btn-group">
+              <div (click)="append('.')"><h1>.</h1></div>
+              <div (click)="append('0')"><h1>0</h1></div>
+              <div (click)="remove()"><h1><ion-icon name="arrow-back"></ion-icon></h1></div>
+            </ion-row>
+          </ion-col>
+          <ion-col col-2 class="no-padding operations">
+            <ion-row class="side-btn-group">
+              <div (click)="calcAction('+')"><h1>+</h1></div>
+              <div (click)="calcAction('-')"><h1>-</h1></div>
+              <div (click)="calcAction('*')"><h1>*</h1></div>
+              <div (click)="calcAction('/')"><h1>/</h1></div>
+              <div (click)="calculate()"><h1>=</h1></div>
+            </ion-row>
+          </ion-col>
         </ion-row>
-        <ion-row class="btn-group">
-          <div (click)="append('.')"><h1>.</h1></div>
-          <div (click)="append('0')"><h1>0</h1></div>
-          <div (click)="remove()"><h1><ion-icon name="arrow-back"></ion-icon></h1></div>
-        </ion-row>
-      </ion-col>
-      <ion-col col-2 class="no-padding operations">
-        <ion-row class="side-btn-group">
-          <div (click)="calcAction('+')"><h1>+</h1></div>
-          <div (click)="calcAction('-')"><h1>-</h1></div>
-          <div (click)="calcAction('*')"><h1>*</h1></div>
-          <div (click)="calcAction('/')"><h1>/</h1></div>
-          <div (click)="calculate()"><h1>=</h1></div>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <ion-list>
+        <ion-item>
+          <ion-label color="primary" stacked>Description</ion-label>
+          <ion-input placeholder="Description" [(ngModel)]="transaction.description"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Date</ion-label>
+          <ion-datetime displayFormat="MMM DD, hh:mm" [(ngModel)]="transaction.date"></ion-datetime>
+        </ion-item>
+      </ion-list>
+    </ion-slide>
+  </ion-slides>
 </ion-content>

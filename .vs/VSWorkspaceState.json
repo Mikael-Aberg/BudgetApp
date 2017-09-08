@@ -8,8 +8,9 @@
     "\\src\\pages",
     "\\src\\pages\\overview",
     "\\src\\pages\\transaction",
-    "\\src\\pipes",
-    "\\src\\pipes\\transaction"
+    "\\src\\providers",
+    "\\src\\providers\\database"
   ],
+  "SelectedNode": "\\src\\pages\\overview\\overview.html",
   "PreviewInSolutionExplorer": false
 }
