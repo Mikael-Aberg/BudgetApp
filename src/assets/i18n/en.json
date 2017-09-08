@@ -2,7 +2,9 @@
   "TRANSACTION": {
     "INCOME": "INCOME",
     "TRANSFER": "TRANSFER",
-    "EXPENSE": "COST",
-    "DETAILS": "Details"
+    "EXPENSE": "EXPENSE",
+    "DETAILS": "Details",
+    "ACCOUNT": "Account",
+    "CATEGORY": "Category"
   }
 }

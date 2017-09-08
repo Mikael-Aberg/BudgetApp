@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Sql } from '../../providers/database/Sql';
+import { ToastController } from 'ionic-angular';
 
 /**
  * Generated class for the TransactionPage page.
@@ -17,24 +18,43 @@ import { Sql } from '../../providers/database/Sql';
 })
 export class TransactionPage {
 
-    tabs = "";
+    //TODO - Look in to ionic native date/time picker
+
     transactionAmmount = "0";
     tmpTransactionAmmount = "";
     calculateAction = "";
     wrapperHeight: number;
     categories: any;
+    accounts: any;
     transaction = {
-        category: "",
+        category: -1,
+        description: "",
+        date: new Date().toISOString(),
+        transactionType: "",
+        account: -1,
+        ammount: -1,
     };
     slideoptions: {
         pager: true,
         autoHeight: true
     };
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService, sql: Sql) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService, private sql: Sql, private toastCtrl: ToastController) {
         translate.setDefaultLang('en');
-        this.tabs = navParams.get("tabs") ? navParams.get("tabs") : "income";
-        sql.getCategories().then((val) => this.categories = val);
+        this.transaction.transactionType = navParams.get("tabs") ? navParams.get("tabs") : "expense";
+        sql.getCategories().then((val) => {
+            this.categories = val;
+            for (var i = 0; i < this.categories.length; i++) {
+                this.categories[i].selected = (i == 0) ? true : false;
+            }
+            console.log(this.categories);
+        });
+        sql.getAccounts().then((val) => {
+            this.accounts = val;
+            for (var i = 0; i < this.accounts.length; i++) {
+                this.accounts[i].selected = (i == 0) ? true : false;
+            }
+        });
     }
 
     calcAction(value) {
@@ -112,6 +132,50 @@ export class TransactionPage {
         this.resizeText();
     }
 
+    validate() {
+        if (this.tmpTransactionAmmount.length != 0) {
+            this.calculate();
+            if (parseFloat(this.transactionAmmount) > 0) {
+                this.transaction.ammount = parseFloat(this.transactionAmmount);
+            }
+            else {
+                this.presentToast("Please enter an ammount");
+                return;
+            }
+        }
+
+        if (this.transaction.account < 0) {
+            this.presentToast("Please select a account");
+            return;
+        }
+
+        if (this.transaction.category < 0) {
+            this.presentToast("Please select a category");
+            return;
+        }
+
+        switch (this.transaction.transactionType) {
+
+        }
+
+        this.sql.addTransaction(this.transaction.date, this.transaction.ammount, this.transaction.account, this.transaction.category, this.transaction.description, this.transaction.transactionType);
+
+    }
+
+    presentToast(message) {
+        let toast = this.toastCtrl.create({
+            message: message,
+            duration: 3000,
+            position: 'middle'
+        });
+
+        toast.onDidDismiss(() => {
+            console.log('Dismissed toast');
+        });
+
+        toast.present();
+    }
+
     resizeText() {
         if ((this.transactionAmmount.length + this.tmpTransactionAmmount.length + this.calculateAction.length) > 2) {
             document.getElementById("transaction-numbers").style.fontSize = (this.wrapperHeight / (this.transactionAmmount.length + this.tmpTransactionAmmount.length + this.calculateAction.length) * 1.5) + "px";
@@ -119,10 +183,6 @@ export class TransactionPage {
         else {
             document.getElementById("transaction-numbers").style.fontSize = (this.wrapperHeight / (1.5)) + "px";
         }
-    }
-
-    openDetails() {
-        console.log("Click");
     }
 
     ionViewDidLoad() {

@@ -74,8 +74,8 @@ export class Sql {
             console.error('Storage: Unable to create initial storage tables', err.tx, err.err);
         });
 
-        //this.query('INSERT INTO Account (Title, Ammount) VALUES ("Account 1", 200)');
-        //this.query('INSERT INTO Category (Title) VALUES ("Food")');
+        this.query('INSERT INTO Account (Title, Ammount) VALUES ("Account 1", 200)');
+        this.query('INSERT INTO Category (Title) VALUES ("Food")');
         //this.query('INSERT INTO Category (Title) VALUES ("Housing")');
 
         //this.query('INSERT INTO Transaction_post (Title, Ammount, Account_ID, Timestamp) VALUES ("Post 1", 123, 1, julianday("2017-01-01 10:00:00"))');
@@ -110,8 +110,8 @@ export class Sql {
         });
     }
 
-    addTransaction(title: string, timestamp: string, ammount: number, account_id: number, category_id: number) {
-        return this.query('INSERT INTO Transaction_post (Title, Ammount, Account_ID, Timestamp, Category_ID) VALUES ("' + title + '",' + ammount + ',' + account_id + ',julianday("' + timestamp + '"), ' + category_id + ')');
+    addTransaction(timestamp: string, ammount: number, account_id: number, category_id: number, description: string, transactionType: string) {
+        return this.query('INSERT INTO Transaction_post (Ammount, Account_ID, Timestamp, Category_ID) VALUES (' + ammount + ',' + account_id + ',julianday("' + timestamp + '"), ' + category_id + ')');
     }
 
     getTransactions() {
@@ -144,6 +144,14 @@ export class Sql {
      */
     getCategories() {
         return this.query('Select * from Category').then(data => {
+            if (data.res.rows.length > 0) {
+                return data.res.rows;
+            }
+        });
+    }
+
+    getAccounts() {
+        return this.query('Select * from Account').then(data => {
             if (data.res.rows.length > 0) {
                 return data.res.rows;
             }
