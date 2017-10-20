@@ -63,33 +63,68 @@
         <ion-row>
           <ion-col col-10 class="no-padding keypad">
             <ion-row class="btn-group">
-              <div (click)="append('1')"><h1>1</h1></div>
-              <div (click)="append('2')"><h1>2</h1></div>
-              <div (click)="append('3')"><h1>3</h1></div>
+              <Button ion-item (click)="append('1')" value="1">
+                  <h1>1</h1>
+              </Button>
+              <Button ion-item (click)="append('2')" value="2">
+                  <h1>2</h1>
+              </Button>
+              <Button ion-item (click)="append('3')" value="3">
+                <h1>3</h1>
+              </Button>
             </ion-row>
             <ion-row class="btn-group">
-              <div (click)="append('4')"><h1>4</h1></div>
-              <div (click)="append('5')"><h1>5</h1></div>
-              <div (click)="append('6')"><h1>6</h1></div>
+                <Button ion-item (click)="append('4')" value="4">
+                    <h1>4</h1>
+                </Button>
+                <Button ion-item (click)="append('5')" value="5">
+                    <h1>5</h1>
+                </Button>
+                <Button ion-item (click)="append('6')" value="6">
+                    <h1>6</h1>
+                </Button>
             </ion-row>
             <ion-row class="btn-group">
-              <div (click)="append('7')"><h1>7</h1></div>
-              <div (click)="append('8')"><h1>8</h1></div>
-              <div (click)="append('9')"><h1>9</h1></div>
+                <Button ion-item (click)="append('7')" value="7">
+                    <h1>7</h1>
+                </Button>
+                <Button ion-item (click)="append('8')" value="8">
+                    <h1>8</h1>
+                </Button>
+                <Button ion-item (click)="append('9')" value="9">
+                    <h1>9</h1>
+                </Button>
             </ion-row>
             <ion-row class="btn-group">
-              <div (click)="append('.')"><h1>.</h1></div>
-              <div (click)="append('0')"><h1>0</h1></div>
-              <div (click)="remove()"><h1><ion-icon name="arrow-back"></ion-icon></h1></div>
+                <Button ion-item (click)="append('.')" value=".">
+                    <h1>.</h1>
+                </Button>
+                <Button ion-item (click)="append('0')" value="0">
+                    <h1>0</h1>
+                    
+                </Button>
+                <Button ion-item (click)="remove()" on-hold="reset()" value="">
+                    <h1><ion-icon name="arrow-back"></ion-icon></h1>
+                </Button>
             </ion-row>
           </ion-col>
           <ion-col col-2 class="no-padding operations">
             <ion-row class="side-btn-group">
-              <div (click)="calcAction('+')"><h1>+</h1></div>
-              <div (click)="calcAction('-')"><h1>-</h1></div>
-              <div (click)="calcAction('*')"><h1>*</h1></div>
-              <div (click)="calcAction('/')"><h1>/</h1></div>
-              <div (click)="calculate()"><h1>=</h1></div>
+              <button ion-item (click)="calcAction('+')">
+                <h1>+</h1>
+              </button>
+              <button ion-item (click)="calcAction('-')">
+                <h1>-</h1>
+              </button>
+              <button ion-item (click)="calcAction('*')"> 
+                <h1>*</h1>
+              </button>
+              <button ion-item (click)="calcAction('/')">
+                <h1>/</h1>
+              </button>
+              <button ion-item (click)="calculate()">
+                <h1>=</h1>                                             
+              </button>
             </ion-row>
           </ion-col>
         </ion-row>

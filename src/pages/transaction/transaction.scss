@@ -18,7 +18,7 @@
 }
 
 #details-button-row {
-  height: 5%;
+  height: 6%;
   background: #cbccce;
   text-align: center;
   cursor: pointer;
@@ -112,21 +112,31 @@ ion-col > h1 {
 }
 
 .btn-group h1, .side-btn-group h1 {
-  margin-top: 1.5rem !important;
   height: 100%;
+  width: 100%;
+  text-align: center;
 }
 
-.btn-group div {
+.btn-group button {
   width: 33%;
   min-height: 50px;
   background-color: transparent;
 }
 
-.btn-group div:last-child {
+.item-inner{
+  background-image: none !important;
+  border-bottom: none !important;
+}
+
+.item-ios[detail-push] .item-inner, button.item-ios:not([detail-none]) .item-inner, a.item-ios:not([detail-none]) .item-inner{
+  padding-right: 8px;
+}
+
+.btn-group button:last-child {
   width: 34%;
 }
 
-.side-btn-group div {
+.side-btn-group button {
   width: 100%;
   height: 20%;
   background-color: transparent;

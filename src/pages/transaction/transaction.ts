@@ -70,6 +70,12 @@ export class TransactionPage {
         this.resizeText();
     }
 
+    reset(){
+        this.calculateAction = "";
+        this.transactionAmmount = "";
+        this.tmpTransactionAmmount = "";
+    }
+
     append(value) {
         if (this.calculateAction !== "") {
             this.tmpTransactionAmmount += value;
