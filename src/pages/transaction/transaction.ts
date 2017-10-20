@@ -43,15 +43,16 @@ export class TransactionPage {
         translate.setDefaultLang('en');
         this.transaction.transactionType = navParams.get("tabs") ? navParams.get("tabs") : "expense";
         sql.getCategories().then((val) => {
-            this.categories = val;
-            for (var i = 0; i < this.categories.length; i++) {
+            this.categories = [];
+            for (var i = 0; i < val.length; i++) {
+                this.categories[i] = val.item(i);
                 this.categories[i].selected = (i == 0) ? true : false;
             }
-            console.log(this.categories);
         });
         sql.getAccounts().then((val) => {
-            this.accounts = val;
-            for (var i = 0; i < this.accounts.length; i++) {
+            this.accounts = [];
+            for (var i = 0; i < val.length; i++) {
+                this.accounts[i] = val.item(i);
                 this.accounts[i].selected = (i == 0) ? true : false;
             }
         });

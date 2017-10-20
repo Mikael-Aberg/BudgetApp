@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
+import { ToastController } from 'ionic-angular';
 
 const DB_NAME: string = 'mydb';
 const win: any = window;
@@ -8,7 +9,7 @@ const win: any = window;
 export class Sql {
     private _dbPromise: Promise<any>;
 
-    constructor(public platform: Platform) {
+    constructor(public platform: Platform, public toastCtrl: ToastController) {
         this._dbPromise = new Promise((resolve, reject) => {
             try {
                 let _db: any;
@@ -18,6 +19,7 @@ export class Sql {
                             name: DB_NAME,
                             location: 'default'
                         });
+                        
                     } else {
                         console.warn('Storage: SQLite plugin not installed, falling back to WebSQL. Make sure to install cordova-sqlite-storage in production!');
                         _db = win.openDatabase(DB_NAME, '1.0', 'database', 5 * 1024 * 1024);
@@ -25,11 +27,28 @@ export class Sql {
                     resolve(_db);
                 });
             } catch (err) {
+                console.log(err);
                 reject({ err: err });
             }
         });
         this._tryInit();
     }
+    
+    presentToast(message: string) {
+        const toast = this.toastCtrl.create({
+          message: message,
+          duration: 3000,
+          position: 'top'
+        });
+      
+        toast.onDidDismiss(() => {
+          console.log('Dismissed toast');
+        });
+      
+        toast.present();
+      }
+
+
 
     // Initialize the DB with our required tables
     _tryInit() {
@@ -105,6 +124,7 @@ export class Sql {
                         (err: any) => reject({ err: err }));
                 });
             } catch (err) {
+                this.presentToast(err);
                 reject({ err: err });
             }
         });
@@ -152,8 +172,12 @@ export class Sql {
 
     getAccounts() {
         return this.query('Select * from Account').then(data => {
+            if(data.err != null){
+                console.log(data.err);
+            }
             if (data.res.rows.length > 0) {
                 return data.res.rows;
+
             }
         });
     }
