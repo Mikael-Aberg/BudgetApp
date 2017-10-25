@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TransactionPage } from '../transaction/transaction';
+import { Sql } from '../../providers/database/Sql';
 
 /**
  * Generated class for the OverviewPage page.
@@ -16,14 +17,22 @@ import { TransactionPage } from '../transaction/transaction';
 })
 export class OverviewPage {
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
+    transactions: any;
 
+    constructor(public navCtrl: NavController, public navParams: NavParams, private sql: Sql) {
     }
 
     ionViewWillEnter() {
     }
 
     ionViewDidLoad() {
+        this.sql.getTransactions().then((val) => {
+            this.transactions = [];
+            for (var i = 0; i < val.length; i++) {
+                this.transactions[i] = val.item(i);
+                this.transactions[i].selected = (i == 0) ? true : false;
+            }
+        });
     }
 
     openTransaction() {

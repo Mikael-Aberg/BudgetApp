@@ -11,6 +11,13 @@
 </ion-header>
 
 <ion-content padding>
+
+    <ion-list>
+        <div ion-item *ngFor="let transaction of transactions">
+          {{ transaction.Date }} | {{transaction.Ammount}}
+        </div>  
+      </ion-list>
+
   <ion-fab bottom right>
     <button (click)="openTransaction()" ion-fab icon-only><ion-icon name="add"></ion-icon></button>
   </ion-fab>

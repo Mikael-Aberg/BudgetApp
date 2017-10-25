@@ -39,8 +39,11 @@ export class TransactionPage {
         autoHeight: true
     };
 
+    //TODO - Remake calculator to something easier to understand
+
     constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService, private sql: Sql, private toastCtrl: ToastController) {
         translate.setDefaultLang('en');
+        //TODO - Change so categories and accounts uppdates everytime the page is opened.
         this.transaction.transactionType = navParams.get("tabs") ? navParams.get("tabs") : "expense";
         sql.getCategories().then((val) => {
             this.categories = [];
@@ -140,7 +143,8 @@ export class TransactionPage {
     }
 
     validate() {
-        if (this.tmpTransactionAmmount.length != 0) {
+        this.calculate();
+        if (this.transactionAmmount.length != 0) {
             this.calculate();
             if (parseFloat(this.transactionAmmount) > 0) {
                 this.transaction.ammount = parseFloat(this.transactionAmmount);
@@ -152,7 +156,7 @@ export class TransactionPage {
         }
 
         if (this.transaction.account < 0) {
-            this.presentToast("Please select a account");
+            this.presentToast("Please select an account");
             return;
         }
 
