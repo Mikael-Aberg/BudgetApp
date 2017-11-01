@@ -41,7 +41,8 @@ export class TransactionPage {
     };
 
     //TODO - Remake calculator to something easier to understand
-
+    //Look into the possibility to make the calculator a service to be used on other pages as well
+    
     constructor(public navCtrl: NavController, public navParams: NavParams, translate: TranslateService, private sql: Sql, private toastCtrl: ToastController) {
         translate.setDefaultLang('en');
         //TODO - Change so categories and accounts uppdates everytime the page is opened.
