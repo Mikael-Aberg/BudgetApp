@@ -26,6 +26,7 @@ export class TransactionPage {
     wrapperHeight: number;
     categories: any;
     accounts: any;
+    decimal: boolean;
     transaction = {
         category: -1,
         description: "",
@@ -77,17 +78,42 @@ export class TransactionPage {
         this.calculateAction = "";
         this.transactionAmmount = "";
         this.tmpTransactionAmmount = "";
+        this.decimal = false;
     }
 
     append(value) {
         if (this.calculateAction !== "") {
-            this.tmpTransactionAmmount += value;
+            if (this.tmpTransactionAmmount == "0" && value !== ".") {
+                this.tmpTransactionAmmount = value;
+            } else {
+
+                if(value == "." && !this.decimal){  
+                    this.tmpTransactionAmmount += value;
+                    this.decimal = true;
+                }
+                else if(this.decimal && this.tmpTransactionAmmount.charAt(this.tmpTransactionAmmount.length - 3) !== ".") {
+                    this.tmpTransactionAmmount += value;
+                }
+                else if(!this.decimal){
+                    this.tmpTransactionAmmount += value;
+                }
+            }
         }
         else {
-            if (this.transactionAmmount == "0") {
+            if (this.transactionAmmount == "0" && value !== ".") {
                 this.transactionAmmount = value;
             } else {
-                this.transactionAmmount += value;
+
+                if(value == "." && !this.decimal){  
+                    this.transactionAmmount += value;
+                    this.decimal = true;
+                }
+                else if(this.decimal && this.transactionAmmount.charAt(this.transactionAmmount.length - 3) !== ".") {
+                    this.transactionAmmount += value;
+                }
+                else if(!this.decimal){
+                    this.transactionAmmount += value;
+                }
             }
         }
         this.resizeText();
@@ -95,6 +121,9 @@ export class TransactionPage {
 
     remove() {
         if (this.tmpTransactionAmmount.length > 1) {
+            if(this.tmpTransactionAmmount.charAt(this.tmpTransactionAmmount.length) == '.'){
+                this.decimal = false;
+            }
             this.tmpTransactionAmmount = this.tmpTransactionAmmount.slice(0, this.tmpTransactionAmmount.length - 1);
         }
         else if (this.tmpTransactionAmmount.length == 1) {
@@ -104,6 +133,9 @@ export class TransactionPage {
             this.calculateAction = "";
         }
         else if (this.transactionAmmount.length > 1) {
+            if(this.transactionAmmount.charAt(this.transactionAmmount.length) == '.'){
+                this.decimal = false;
+            }
             this.transactionAmmount = this.transactionAmmount.slice(0, this.transactionAmmount.length - 1);
         }
         else {
